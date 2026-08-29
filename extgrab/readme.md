@@ -89,4 +89,4 @@ ExtGrab is an independent tool and is not affiliated with, endorsed by, or spons
 
 ## License
 
-Add a license of your choice here (e.g. MIT) before publishing.
+[MIT](LICENSE) © 2026 zer0lightning
