@@ -1,22 +1,22 @@
 # ExtGrab
 
-A single-file Cloudflare Worker that fetches Chrome, Edge, and Firefox extension packages directly from each store's own distribution endpoint — no browser install, no account, no extension of your own required.
+A single-file Cloudflare Worker that fetches Chrome, Edge, and Firefox extension packages directly from each store's own distribution endpoint - no browser install, no account, no extension of your own required.
 
 Paste a store URL or an extension ID, and ExtGrab streams back the raw `.crx` or `.xpi` file, optionally converted to a plain `.zip`.
 
 ## Features
 
-- **Three stores, one tool** — Chrome Web Store, Microsoft Edge Add-ons, and Mozilla Add-ons (AMO)
-- **Store auto-detection** — paste a store URL and the right store is selected automatically
-- **Native or ZIP** — download the original `.crx`/`.xpi`, or a plain `.zip` with the CRX header stripped off
-- **Descriptive filenames** — reads the package's own `manifest.json` to name the file `<extension>-<version>-<id>.<ext>` instead of just the raw ID
-- **Unmodified packages** — files are streamed through as-is; nothing is repackaged or altered
-- **No accounts, no storage** — nothing is logged beyond what's needed to serve the request, and no packages are retained
+- **Three stores, one tool** - Chrome Web Store, Microsoft Edge Add-ons, and Mozilla Add-ons (AMO)
+- **Store auto-detection** - paste a store URL and the right store is selected automatically
+- **Native or ZIP** - download the original `.crx`/`.xpi`, or a plain `.zip` with the CRX header stripped off
+- **Descriptive filenames** - reads the package's own `manifest.json` to name the file `<extension>-<version>-<id>.<ext>` instead of just the raw ID
+- **Unmodified packages** - files are streamed through as-is; nothing is repackaged or altered
+- **No accounts, no storage** - nothing is logged beyond what's needed to serve the request, and no packages are retained
 - **Light/dark theme**, keyboard-friendly, and reasonably accessible (skip link, `aria-live` status, visible focus states)
-- **SEO-ready** — `robots.txt`, `sitemap.xml`, canonical URLs, Open Graph/Twitter tags, and JSON-LD structured data
-- **Hardened by default** — CSP, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, and HSTS on every response
+- **SEO-ready** - `robots.txt`, `sitemap.xml`, canonical URLs, Open Graph/Twitter tags, and JSON-LD structured data
+- **Hardened by default** - CSP, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, and HSTS on every response
 
-Runs entirely on Cloudflare's edge — no origin server, database, or build step. It's one JavaScript file.
+Runs entirely on Cloudflare's edge - no origin server, database, or build step. It's one JavaScript file.
 
 ## Routes
 
@@ -29,7 +29,7 @@ Runs entirely on Cloudflare's edge — no origin server, database, or build step
 | `/sitemap.xml` | GET | XML sitemap |
 | `/` | POST | Fetches and returns an extension package (see below) |
 
-### `POST /` — download an extension
+### `POST /` - download an extension
 
 Accepts either `application/json` or `multipart/form-data`.
 
@@ -44,7 +44,7 @@ Accepts either `application/json` or `multipart/form-data`.
 | Field | Values | Notes |
 |---|---|---|
 | `extensionId` | store URL, 32-character Chrome/Edge ID, or Firefox slug/GUID | required |
-| `storeType` | `chrome`, `edge`, `firefox` | optional — inferred from a store URL automatically |
+| `storeType` | `chrome`, `edge`, `firefox` | optional - inferred from a store URL automatically |
 | `format` | `native`, `zip` | optional, defaults to `native` |
 
 The response is the binary package with a `Content-Disposition` header set to a descriptive filename, or a JSON error object on failure. Files over 75MB skip manifest inspection and stream through directly with an ID-only filename.
@@ -64,17 +64,17 @@ npm install -g wrangler
 wrangler deploy worker.js --name extgrab
 ```
 
-That's it — the Worker serves both the UI and the API from the same script.
+That's it - the Worker serves both the UI and the API from the same script.
 
 ## How it works
 
 Each store exposes an update/download endpoint that Chrome, Edge, and Firefox themselves use to fetch extensions:
 
-- **Chrome** — `clients2.google.com/service/update2/crx`
-- **Edge** — `edge.microsoft.com/extensionwebstorebase/v1/crx`
-- **Firefox** — `addons.mozilla.org/firefox/downloads/latest/…`
+- **Chrome** - `clients2.google.com/service/update2/crx`
+- **Edge** - `edge.microsoft.com/extensionwebstorebase/v1/crx`
+- **Firefox** - `addons.mozilla.org/firefox/downloads/latest/…`
 
-ExtGrab builds the appropriate request, follows the redirect to the actual package, and streams the response back. For the descriptive-filename and ZIP-conversion features, it reads the package's own `manifest.json` — `.crx` files are a small binary header glued onto a plain ZIP, so the Worker parses just enough of the ZIP central directory to locate that one entry and, if compressed, inflate it using the Web Compression Streams API (`DecompressionStream('deflate-raw')`) rather than a bundled library.
+ExtGrab builds the appropriate request, follows the redirect to the actual package, and streams the response back. For the descriptive-filename and ZIP-conversion features, it reads the package's own `manifest.json` - `.crx` files are a small binary header glued onto a plain ZIP, so the Worker parses just enough of the ZIP central directory to locate that one entry and, if compressed, inflate it using the Web Compression Streams API (`DecompressionStream('deflate-raw')`) rather than a bundled library.
 
 ## Security
 
