@@ -1,8 +1,13 @@
-# ExtGrab
+# ExtGrab - Browser Extension Downloader
 
-A single-file Cloudflare Worker that fetches Chrome, Edge, and Firefox extension packages directly from each store's own distribution endpoint - no browser install, no account, no extension of your own required.
+A Cloudflare Worker that downloads Chrome, Edge, and Firefox extensions from their respective externsion marketplace.
 
-Paste a store URL or an extension ID, and ExtGrab streams back the raw `.crx` or `.xpi` file, optionally converted to a plain `.zip`.
+Paste a store URL or an extension ID, and ExtGrab downloads raw `.crx` or `.xpi` file, optionally converted to a plain `.zip`.
+
+
+## Screenshot
+![ExtGrab screenshot](./assets/screenshot.png)
+
 
 ## Features
 
