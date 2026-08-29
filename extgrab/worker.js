@@ -1257,6 +1257,20 @@ a { color: inherit; }
   color: var(--ink);
 }
 
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.brand-byline {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--ink-faint);
+}
+
 .logo {
   width: 28px;
   height: 28px;
@@ -1684,6 +1698,23 @@ main { padding: 0 24px; flex: 1 0 auto; display: flex; flex-direction: column; }
 
 .about-item span { color: var(--ink-soft); font-size: 11px; line-height: 1.5; }
 
+.source-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 10px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.source-link:hover { border-color: var(--brand); background: var(--surface-2); }
+
 /* ========================================================
    FOOTER
 ======================================================== */
@@ -1700,10 +1731,12 @@ main { padding: 0 24px; flex: 1 0 auto; display: flex; flex-direction: column; }
   gap: 10px;
 }
 
-.footer-links { display: flex; gap: 16px; }
+.footer-links { display: flex; align-items: center; gap: 16px; }
 
 .footer-links a { text-decoration: none; color: var(--ink-faint); }
 .footer-links a:hover { color: var(--ink-soft); }
+
+.footer-github { display: inline-flex; align-items: center; }
 
 /* ========================================================
    LOADING
@@ -1731,6 +1764,7 @@ main { padding: 0 24px; flex: 1 0 auto; display: flex; flex-direction: column; }
 
 @media (max-width: 560px) {
   .header-inner { padding: 14px 16px; }
+  .brand-byline { display: none; }
   main { padding: 0 16px; }
   .card-body { padding: 16px; }
   .footer-inner { padding: 16px; flex-direction: column; align-items: flex-start; gap: 8px; }
@@ -1743,11 +1777,16 @@ function getSiteFooter() {
   return `<footer class="footer">
 
 <div class="footer-inner">
-<span>© 2026 ExtGrab. Not affiliated with Google, Microsoft, or Mozilla.</span>
+<span>© 2026 ExtGrab by zer0lightning. All rights reserved. Not affiliated with Google, Microsoft, or Mozilla.</span>
 <div class="footer-links">
 <a href="/terms">Terms</a>
 <a href="/privacy">Privacy</a>
 <a href="/sitemap.xml">Sitemap</a>
+<a class="footer-github" href="https://github.com/zer0lightning/super-cloudflare-workers/tree/main/extgrab" target="_blank" rel="noopener noreferrer" aria-label="Source code on GitHub">
+<svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true">
+  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.53-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+</svg>
+</a>
 </div>
 </div>
 
@@ -1795,7 +1834,10 @@ function getBrandLogo() {
 </svg>
 </div>
 
+<span class="brand-text">
 ExtGrab
+<span class="brand-byline">by zer0lightning</span>
+</span>
 
 </a>`;
 }
@@ -2130,6 +2172,13 @@ ExtGrab pulls extension packages from each vendor's own distribution endpoint.
 
 </div>
 
+<a class="source-link" href="https://github.com/zer0lightning/super-cloudflare-workers/tree/main/extgrab" target="_blank" rel="noopener noreferrer">
+<svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true">
+  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.53-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+</svg>
+Source code on GitHub
+</a>
+
 </div>
 
 </section>
@@ -2138,18 +2187,7 @@ ExtGrab pulls extension packages from each vendor's own distribution endpoint.
 </main>
 
 
-<footer class="footer">
-
-<div class="footer-inner">
-<span>© 2026 ExtGrab. Not affiliated with Google, Microsoft, or Mozilla.</span>
-<div class="footer-links">
-<a href="/terms">Terms</a>
-<a href="/privacy">Privacy</a>
-<a href="/sitemap.xml">Sitemap</a>
-</div>
-</div>
-
-</footer>
+${getSiteFooter()}
 
 
 <script>
