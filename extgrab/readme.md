@@ -7,7 +7,7 @@ Paste a store URL or an extension ID, and ExtGrab downloads raw `.crx` or `.xpi`
 
 ## Screenshot
 ![ExtGrab screenshot](./assets/screenshot.png)
-
+Live Demo: http://extgrab.threatstitch.com/
 
 ## Features
 
